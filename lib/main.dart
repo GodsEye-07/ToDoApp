@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,6 +19,25 @@ class MyApp extends StatelessWidget {
 }
 
 class FirstScreen extends StatelessWidget{
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = new GoogleSignIn();
+
+  Future<FirebaseUser> _SignIn() async{
+
+    GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    GoogleSignInAuthentication gSA = await googleSignInAccount.authentication;
+
+    FirebaseUser user = await _auth.signInWithGoogle(
+       idToken: gSA.idToken, accessToken: gSA.accessToken
+    );
+
+    print('username : ${user.displayName}');
+
+    return user;
+
+  }
+
   @override
   Widget build (BuildContext context) {
     return new Scaffold(
@@ -45,14 +66,24 @@ class SecondScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("To Do App"),
       ),
-      body: Center(
-        child: OutlineButton(
-          onPressed: () {
-            Navigator.pop(context);
-            shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(80.0));
-            BorderSide: BorderSide(color: Colors.blue);
-          },
-          child: Text('Logout'),
+      body: new Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: new Column(
+          children: <Widget>[
+            new RaisedButton(
+              onPressed: () => _signIn().then(),
+              child: new Text("Sign In"),
+              color: Colors.green,
+            ),
+            new Padding(
+              padding: const EdgeInsets.all(10.0),
+            ),
+            new RaisedButton(
+              onPressed: null,
+              child: new Text("Sign Out"),
+              color: Colors.red,
+            )
+          ],
         ),
       ),
     );
