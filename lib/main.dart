@@ -28,7 +28,7 @@ class FirstScreen extends StatelessWidget{
           child: Text("Sign In"),
           onPressed: (){
             Navigator.push(context, 
-            MaterialPageRoute(builder: (context) => SecondScreen())
+            MaterialPageRoute(builder: (context) => SecondScreen());
             shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(80.0));
             BorderSide: BorderSide(color: Colors.blue);
             );
