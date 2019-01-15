@@ -60,14 +60,30 @@ In the VS Code go to the "Debug" mode there besides debug there will be written 
  open terminal in VS Code and follow the following steps-
  
  1. Go to the directory where all the code is stored for the project created.
- 2. type **git init** to initialise an empty Git repository and press enter.
- 3. type **git add .** this add all the uncommited and changed files from all the folders to this repo.
- 4. type **git commit -m ("your log message here.")** to commit the files to this repository.
+ 2. type ```git init``` to initialise an empty Git repository and press enter.
+ 3. type ```git add .``` this add all the uncommited and changed files from all the folders to this repo.
+ 4. type ```git commit -m ("your log message here.")``` to commit the files to this repository.
  5. Go to Github and create an empty repo by clicking on + symbol besides your profile button.
  6. Give the name of the repo you want to create (This can also be different from the app name).
  7. There is a link which is created after completing all the steps which will look like **git remote url** copy that and paste the whole command in the terminal after step 4 and press enter. Now after this you tell your repository to store everything on this repository but still the changes in this files are yet to be commited to the repository.
-8. type **git push -u oring master** this takes all the commited code and pushes it to the repo where *master* is the branch on which the code is pushed.
+8. type ```git push -u oring master``` this takes all the commited code and pushes it to the repo where *master* is the branch on which the code is pushed.
+9. Later you can check you activites using ```git status``` and this will let you know about all the changes in the app after the last commit.
+10. you can also check all the git logs using ```git log``` and you get a list of all the commited logs.
 
 
 ### By this you will have a version control for your application.
+
+
+## Task 3 - Setting up Firebase and connecting your application -
+Since I have been developing many Apps previously with Firebase as a Backend service and hence was familiar with almost all the features of it, It was easy to go through this.
+
+
+The steps I followed were - 
+- I went to [Firebase and Flutter](https://firebase.google.com/docs/flutter/setup) setup guide to check how to add Flutter app.
+- Then I connected my Android part as said after registering the application.
+*As I never connected an android application before with Firebase and had zero experience,* I found [this](https://www.youtube.com/watch?v=8M-Fa239Hy4&t=894s) video very helpful, It also has all the steps on how to add iOS and how to perform the Google Authentication for the app.
+
+## Task 4 - Coding the ToDo app -
+ I have very well tried to code the application and also commented properly to explain the bits and parts of the code and how they work.
+ 
  
