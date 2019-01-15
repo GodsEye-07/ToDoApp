@@ -86,4 +86,5 @@ The steps I followed were -
 ## Task 4 - Coding the ToDo app -
  I have very well tried to code the application and also commented properly to explain the bits and parts of the code and how they work.
  
- 
+## Task 5 - Hasura GraphQL Engine deployed on Heroku -
+With [Hasura's Documentation](https://docs.hasura.io/1.0/graphql/manual/getting-started/heroku-simple.html) I was successfully able to deploy it on Heroku.
