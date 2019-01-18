@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "528002236943",
+    "firebase_url": "https://hasura-internship-task.firebaseio.com",
+    "project_id": "hasura-internship-task",
+    "storage_bucket": "hasura-internship-task.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528002236943:android:04b7553ed5cad77a",
+        "android_client_info": {
+          "package_name": "hasura_internship.task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528002236943-7eohkclk2em6q1onmecbuhotqej8tgur.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hasura_internship.task",
+            "certificate_hash": "ef362e8cc3b1cf394839157333502fed16ffc6b5"
+          }
+        },
+        {
+          "client_id": "528002236943-tjhf0k5135udonngl1o5jjudq1cdo2im.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXxhS8eSFa1jBbZne-jg6sOxs3EZ5qrrA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528002236943-tjhf0k5135udonngl1o5jjudq1cdo2im.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

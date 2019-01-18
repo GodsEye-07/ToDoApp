@@ -1,18 +1,94 @@
 // Import MaterialApp and other widgets which we can use to quickly create a material app
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // Code written in Dart starts exectuting from the main function. runApp is part of
 // Flutter, and requires the component which will be our app's container. In Flutter,
 // every component is known as a "widget".
-void main() => runApp(new TodoApp());
 
-// Every component in Flutter is a widget, even the whole app itself
-class TodoApp extends StatelessWidget {
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Todo List',
-      home: new TodoList()
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: new MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget{
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = new GoogleSignIn();
+
+  Future<FirebaseUser> _signIn() async{
+    GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    GoogleSignInAuthentication gSA = await googleSignInAccount.authentication;
+
+
+    FirebaseUser user = await _auth.signInWithGoogle(
+      idToken: gSA.idToken,
+      accessToken: gSA.accessToken
+    );
+
+    print("Username: ${user.displayName}");
+    return user;
+  }
+
+  void _signOut(){
+    googleSignIn.signOut();
+    print("User Signed Out");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
+    return Scaffold(
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text('Google Firebase Authentication'),
+      ),
+      body: new Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            new RaisedButton(
+              onPressed: (){  
+                _signIn().then((FirebaseUser user)=> print(user)).catchError((e)=>print(e));
+                Navigator.push(context,MaterialPageRoute(builder: (context) => TodoList()),);
+              },
+              child: new Text('Sign In'),
+              color: Colors.green,
+              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+            ),
+            new Padding(
+              padding: const EdgeInsets.all(10.0),
+            ),
+            new RaisedButton(
+              onPressed: _signOut,
+              child: new Text('Sign Out'),
+              color: Colors.red,
+              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -90,7 +166,17 @@ class TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Todo List')
+        title: new Text('Todo List'),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text('SignOut'),
+            color: Colors.blue,
+            textColor: Colors.white,
+            onPressed: (){
+              Navigator.of(context).pop();  
+            },
+          ),
+        ],
       ),
       body: _buildTodoList(),
       floatingActionButton: new FloatingActionButton(
