@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Code written in Dart starts exectuting from the main function. runApp is part of
 // Flutter, and requires the component which will be our app's container. In Flutter,
