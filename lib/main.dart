@@ -8,22 +8,73 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 // Flutter, and requires the component which will be our app's container. In Flutter,
 // every component is known as a "widget".
 
-void main() => runApp(MyApp());
+// void main() => runApp(MyApp());
+
+void main() {
+  // ValueNotifier<Client> client = ValueNotifier(
+  //   Client(
+  //     endPoint: 'https://hasurainternship.herokuapp.com/v1alpha1/graphql',
+  //     cache: InMemoryCache(),
+  //     apiToken: '',
+  //   ),
+  // );
+
+  //to run the application
+  runApp(MyApp());
+}
+
+ValueNotifier<Client> client = ValueNotifier(
+    Client(
+      endPoint: 'https://hasurainternship.herokuapp.com/v1alpha1/graphql',
+      cache: InMemoryCache(),
+      apiToken: '',
+    ),
+  );
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return GraphqlProvider(
+      client: client,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: new MyHomePage(),
       ),
-      home: new MyHomePage(),
     );
   }
 }
+
+//for normal query
+String readTasks = """
+
+  query{
+    todolist{
+      id
+      tasks
+    }
+  }
+
+""" .replaceAll('\n', ' ');
+
+//for mutation
+//change this accordingly to perform the action when the button is pressed and also to store the value which goes not some random text
+String mutation = """
+
+  mutation addTask(\$id: ID!) {
+    addtask(input: {newtask: \$newtask}){
+      todolist{
+        tasks
+      }
+    }
+  }
+""".replaceAll('\n', ' ');
+
+
 
 class MyHomePage extends StatelessWidget{
 
@@ -33,8 +84,7 @@ class MyHomePage extends StatelessWidget{
   Future<FirebaseUser> _signIn() async{
     GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     GoogleSignInAuthentication gSA = await googleSignInAccount.authentication;
-
-
+    
     FirebaseUser user = await _auth.signInWithGoogle(
       idToken: gSA.idToken,
       accessToken: gSA.accessToken
@@ -108,6 +158,42 @@ class TodoListState extends State<TodoList> {
       // Putting our code inside "setState" tells the app that our state has changed, and
       // it will automatically re-render the list
       setState(() => _todoItems.add(task));
+
+
+      // //also try to add the mutation here.**
+      // Mutation(
+      //       mutation,
+      //       builder: (
+      //         runMutation,{
+      //           bool loading,
+      //           var data,
+      //           Exception error,
+      //         }){
+      //           return FloatingActionButton(
+      //             onPressed: ()=>runMutation({
+      //               'newtask': task,
+      //             })
+      //           );
+      //         },
+      //         onCompleted: (Map<String, dynamic> data){
+      //           showDialog(
+      //             context: context,
+      //             builder: (BuildContext context){
+      //               return AlertDialog(
+      //                 title: Text('Task added'),
+      //                 actions: <Widget>[
+      //                   SimpleDialogOption(
+      //                     child: Text('Dismiss'),
+      //                     onPressed: (){
+      //                       Navigator.of(context).pop();
+      //                     },
+      //                   )
+      //                 ],
+      //               );
+      //             }
+      //           );
+      //         }
+      //     );
     }
   }
 
@@ -177,6 +263,32 @@ class TodoListState extends State<TodoList> {
               Navigator.of(context).pop();  
             },
           ),
+
+          // Query(
+          //   readTasks,
+          //   builder: ({
+          //     bool loading,
+          //     var data,
+          //     Exception error,
+          //   }){
+          //     if (error != null){
+          //       return Text(error.toString());
+          //     }
+          //     if (loading){
+          //       return Text('Loading');
+          //     }
+
+          //     List tasks = data['tasks'];
+          //     return ListView.builder(
+          //       itemCount: tasks.length,
+          //       itemBuilder: (context,index){
+          //         final taskList = tasks[index];
+          //         return Text(taskList['name']);
+          //       }
+          //     );
+          //   }  
+          // ),
+      
         ],
       ),
       body: _buildTodoList(),
